@@ -12,7 +12,6 @@ https://calzone.proofofpizza.com/tech/tutorial/Angular-environment-variables-at-
 
 https://youtu.be/05eTNVpqz_s?list=PL0hSJrxggIQoKLETBSmgbbvE4FO_eEgoB
 https://docs.docker.com/language/dotnet/configure-ci-cd/
-test
 
 
 
