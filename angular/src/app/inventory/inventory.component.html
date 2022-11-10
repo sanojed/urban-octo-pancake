@@ -1,0 +1,29 @@
+<div class="text-centre">
+    <h2>Inventory List</h2>
+    <hr>
+    <form [formGroup]="_myForm" (ngSubmit)="ngSubmit(_myForm)">
+        <table class="tb">
+            <thead>
+                <tr>
+                    <th><input type="number" formControlName="id" placeholder="Id"></th>
+                    <th><input type="text" formControlName="name" placeholder="Name"></th>
+                    <th><input type="number" formControlName="quantity" placeholder="Quantity"></th>
+                    <th><button type="submit" [disabled]="_myForm.invalid">{{_myForm.get('id')?.value > 0?"Update":
+                            "Add"
+                            }}</button></th>
+                    <th><button type="button" (click)="OnClear()">Clear</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let v of _inventory">
+                    <td>{{v.id}}</td>
+                    <td>{{v.name}}</td>
+                    <td>{{v.quantity}}</td>
+                    <td><button type="button" (click)="OnEdit(v)">Edit</button></td>
+                    <td><button type="button" (click)="OnDelete(v.id)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <hr>
+</div>

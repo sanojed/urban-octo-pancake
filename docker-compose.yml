@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  db:
+    image: sanojed/sql-inventory
+    #image: sql-inventory
+    build:
+      context: .
+      dockerfile: sql/Dockerfile
+    ports:
+      - "1433:1433"
+    networks:
+      - micro-network
+    restart: always
+    volumes:
+      - mssqldata:/var/opt/mssql
+
+  rest:
+    image: sanojed/micro-inventory
+    # image: micro-inventory
+    build:
+      context: .
+      dockerfile: micro/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5000:80"
+    networks:
+      - micro-network
+    restart: always
+    environment:
+      - DBHOST=db
+      - DBPORT=1433
+
+  ui:
+    image: sanojed/ui-inventory
+    # image: ui-inventory
+    build:
+      context: .
+      dockerfile: angular/Dockerfile
+    depends_on:
+      - rest
+    ports:
+      - "4200:80"
+    networks:
+      - micro-network
+    restart: always
+    volumes:
+      - angulardata:/app/src/assets
+
+networks:
+  micro-network:
+    driver: bridge
+
+volumes:
+  mssqldata:
+  angulardata:
+
+    # old script
+    # services:
+    #   db:
+    #     image: sql-custom
+    #     build:
+    #       context: .
+    #       dockerfile: sql/Dockerfile
+    #     ports:
+    #       - "1444:1433"
+    #     volumes:
+    #      - mssqldata:/var/opt/mssql
+
+    # volumes:
+    #   mssqldata:
